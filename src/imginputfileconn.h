@@ -74,7 +74,7 @@ namespace dd
     void scale(const cv::Mat &src, cv::Mat &dst) const {
       float coef = std::min(static_cast<float>(_scale_max) / std::max(src.rows, src.cols),
 			    static_cast<float>(_scale_min) / std::min(src.rows, src.cols));
-      cv::resize(src, dst, cv::Size(), coef, coef, CV_INTER_CUBIC);
+      cv::resize(src, dst, cv::Size(), coef, coef);
     }
 
     // decode image
@@ -97,11 +97,11 @@ namespace dd
 			// XXX - This may cause issues if batch images are different resolutions
 			size_t currMaxDim = std::max(img.rows, img.cols);
 			double scale = static_cast<double>(std::max(_width, _height)) / static_cast<double>(currMaxDim);
-			cv::resize(img,rimg,cv::Size(),scale,scale,CV_INTER_CUBIC);
+			cv::resize(img,rimg,cv::Size(),scale,scale);
 		}
 	} else {
 		// Resize normally to the specified width and height
-		cv::resize(img,rimg,cv::Size(_width,_height),0,0,CV_INTER_CUBIC);
+		cv::resize(img,rimg,cv::Size(_width,_height),0,0,CV_INTER_LINEAR);
 	}
 
 	if (_crop_width != 0 && _crop_height != 0) {
@@ -151,11 +151,11 @@ namespace dd
 				// XXX - This may cause issues if batch images are different resolutions
 				size_t currMaxDim = std::max(img.rows, img.cols);
 				double scale = static_cast<double>(std::max(_width, _height)) / static_cast<double>(currMaxDim);
-				cv::resize(img,rimg,cv::Size(),scale,scale,CV_INTER_CUBIC);
+				cv::resize(img,rimg,cv::Size(),scale,scale);
 			}
 		} else {
 			// Resize normally to the specified width and height
-			cv::resize(img,rimg,cv::Size(_width,_height),0,0,CV_INTER_CUBIC);
+			cv::resize(img,rimg,cv::Size(_width,_height),0,0,CV_INTER_LINEAR);
 		}
 	}
       catch(...)
@@ -268,11 +268,11 @@ namespace dd
 					// XXX - This may cause issues if batch images are different resolutions
 					size_t currMaxDim = std::max(img.rows, img.cols);
 					double scale = static_cast<double>(std::max(_width, _height)) / static_cast<double>(currMaxDim);
-					cv::resize(img,rimg,cv::Size(),scale,scale,CV_INTER_CUBIC);
+					cv::resize(img,rimg,cv::Size(),scale,scale);
 				}
 			} else {
 				// Resize normally to the specified width and height
-				cv::resize(img,rimg,cv::Size(_width,_height),0,0,CV_INTER_CUBIC);
+				cv::resize(img,rimg,cv::Size(_width,_height),0,0,CV_INTER_LINEAR);
 			}
 	    }
 	  catch(...)
