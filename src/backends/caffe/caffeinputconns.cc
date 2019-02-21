@@ -621,7 +621,7 @@ namespace dd
 	    cv::Mat rimg;
 	    try
 	      {
-		cv::resize(img,rimg,size,0,0,CV_INTER_CUBIC);
+		cv::resize(img,rimg,size,0,0,CV_INTER_BILINEAR);
 	      }
 	    catch(std::exception &e)
 	      {

@@ -210,7 +210,8 @@ namespace dd
 	  for (int i=0;i<(int)this->_images.size();i++)
 	    {      
 	      caffe::Datum datum;
-	      caffe::CVMatToDatum(this->_images.at(i),&datum);
+	      caffe::EncodeCVMatToDatum(this->_images.at(i),guess_encoding(_uris.at(i)),&datum);
+	      DecodeDatumNative(&datum);
 	      if (!_test_labels.empty())
 		datum.set_label(_test_labels.at(i));
 	      if (_data_mean.count() != 0)
