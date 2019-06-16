@@ -2412,15 +2412,15 @@ namespace dd
 			bool skip = false;
 			for (int d=3;d<7;d++)
 			  {
-			    if (detection[d] < 0 || detection[d] > 1)
+			    if (detection[d] < 0 )
 			      {
-				this->_logger->error("skipping invalid bbox");
-				skip = true;
-				break;
+                                detection[d] = 0;
+                              }
+                            else if (detection[d] > 1)
+                              {
+                                detection[d] = 1;
 			      }
 			  }
-			if (skip)
-			  continue; // does not record this bbox
 			probs.push_back(detection[2]);
 			cats.push_back(this->_mlmodel.get_hcorresp(detection[1]));
 			ad_bbox.add("xmin",detection[3]*cols);
@@ -2608,15 +2608,10 @@ namespace dd
                            else
                              {
                                double res = results[slot]->data_at(loc);
-                               if (!ic->_dont_scale_labels)
-                                 {
-                                   double max = ic->_max_vals[ic->_label_pos[k]];
-                                   double min = ic->_min_vals[ic->_label_pos[k]];
-                                   if (ic->_scale_between_minus1_and_1)
-                                     res +=  0.5;
-                                   res = res * (max -min) + min;
-                                 }
-                               predictions.push_back(res);
+                               double max = ic->_max_vals[ic->_label_pos[k]];
+                               double min = ic->_min_vals[ic->_label_pos[k]];
+                               double unscaled_res = res * (max - min) + min;
+                               predictions.push_back(unscaled_res);
                              }
                          }
                        APIData ts;
